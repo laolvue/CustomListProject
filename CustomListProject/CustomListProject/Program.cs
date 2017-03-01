@@ -11,11 +11,12 @@ namespace CustomListProject
         static void Main(string[] args)
         {
             SetList<string> setList = new SetList<string>();
-            setList.AddList("bob");
-            setList.AddList("Lao");
-            setList.AddList("car");
-            setList.SubtractList();
-            setList.AddList("duo");
+            setList.Add("bob");
+            setList.Add("Lao");
+            setList.Add("car");
+            setList.Subtract();
+            setList.Add("duo");
+            
             Console.ReadLine();
         }
     }
