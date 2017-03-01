@@ -114,11 +114,10 @@ namespace UnitTestProject1
 
             //Assert
             Assert.AreEqual(2, sumOfList.test.Length);
-           
         }
 
         [TestMethod]
-        public void Add_TwoEmptyInstancesOfCustomList_ReturnsValueIsNull()
+        public void Add_TwoEmptyInstancesOfStringCustomList_ReturnsValueIsNull()
         {
             SetList<string> listOne = new SetList<string>();
             SetList<string> listTwo = new SetList<string>();
@@ -129,6 +128,19 @@ namespace UnitTestProject1
 
             //Assert
             Assert.IsNull(sumOfList.test[0]);
+        }
+
+        public void Add_TwoEmptyInstancesOfIntCustomList_ReturnsValueIsZero()
+        {
+            SetList<string> listOne = new SetList<string>();
+            SetList<string> listTwo = new SetList<string>();
+            //Arrange
+
+            //Act
+            SetList<string> sumOfList = listOne + listTwo;
+
+            //Assert
+            Assert.AreEqual(0,sumOfList.test[0]);
         }
 
         [TestMethod]
@@ -143,7 +155,6 @@ namespace UnitTestProject1
             listTwo.Add("dog");
             //Act
             SetList<string> sumOfList = listOne + listTwo;
-
             //Assert
             Assert.AreEqual("cow", sumOfList.test[2]);
         }
@@ -165,6 +176,61 @@ namespace UnitTestProject1
             Assert.AreEqual(4, sumOfList.test.Length);
         }
 
+        [TestMethod]
+        public void subtract_TwoInstanceOfCustomList_ReturnsNewListLength()
+        {
+            SetList<int> listOne = new SetList<int>();
+            SetList<int> listTwo = new SetList<int>();
+            //Arrange
+            listOne.Add(5);
+            listOne.Add(6);
+            listOne.Add(3);
+            listTwo.Add(6);
+            //Act
+            SetList<int> sumOfList = listOne - listTwo;
+            //Assert
+            Assert.AreEqual(2, sumOfList.test.Length);
+        }
+
+        [TestMethod]
+        public void subtract_TwoInstancesOfCustomList_ReturnsValueAtIndex()
+        {
+            SetList<int> listOne = new SetList<int>();
+            SetList<int> listTwo = new SetList<int>();
+            //Arrange
+            listOne.Add(5);
+            listOne.Add(6);
+            listOne.Add(3);
+            listTwo.Add(6);
+            //Act
+            SetList<int> sumOfList = listOne - listTwo;
+            //Assert
+            Assert.AreEqual(3, sumOfList.test[1]);
+        }
+
+        [TestMethod]
+        public void subtract_TwoInstancesOfEmptyStringCustomList_ReturnsValueAtIndex()
+        {
+            SetList<string> listOne = new SetList<string>();
+            SetList<string> listTwo = new SetList<string>();
+            //Arrange
+            //Act
+            SetList<string> sumOfList = listOne - listTwo;
+            //Assert
+            Assert.IsNull(sumOfList.test[0]);
+        }
+
+        [TestMethod]
+        public void subtract_TwoInstancesOfEmptyIntCustomList_ReturnsValueAtIndex()
+        {
+            SetList<int> listOne = new SetList<int>();
+            SetList<int> listTwo = new SetList<int>();
+            //Arrange
+            //Act
+            SetList<int> sumOfList = listOne - listTwo;
+            //Assert
+            Assert.AreEqual(0,sumOfList.test[0]);
+        }
 
     }
 }

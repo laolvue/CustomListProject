@@ -26,7 +26,7 @@ namespace CustomListProject
             counter++;
             T[] temporaryList = test;
             test = new T[counter];
-            if(counter == 0)
+            if (counter == 0)
             {
                 for (int i = (counter - 1); i >= 0; i--)
                 {
@@ -37,10 +37,10 @@ namespace CustomListProject
             {
                 for (int i = (counter - 1); i > 0; i--)
                 {
-                    test[i-1] = temporaryList[i-1];
+                    test[i - 1] = temporaryList[i - 1];
                 }
             }
-            test[counter-1] = value;
+            test[counter - 1] = value;
         }
 
         public void Subtract()
@@ -65,7 +65,35 @@ namespace CustomListProject
             return counter;
         }
 
-        public static SetList<T> operator +(SetList<T> inputOne, SetList<T>inputTwo)
+        public static SetList<T> operator +(SetList<T> inputOne, SetList<T> inputTwo)
+        {
+            if (inputOne.counter == 0)
+            {
+                inputOne.counter++;
+            }
+            if (inputTwo.counter == 0)
+            {
+                inputTwo.counter++;
+            }
+
+            T[] temporaryList = new T[inputOne.counter + inputTwo.counter];
+            int count = 0;
+            for (int i = 0; i < inputOne.counter; i++)
+            {
+                temporaryList[i] = inputOne.test[i];
+                count++;
+            }
+            for (int j = 0; j < inputTwo.counter; j++)
+            {
+                temporaryList[count] = inputTwo.test[j];
+                count++;
+            }
+            SetList<T> sumOfList = new SetList<T>(temporaryList);
+            sumOfList.counter = inputOne.counter + inputTwo.counter;
+            return (sumOfList);
+        }
+
+        public static SetList<T> operator -(SetList<T> inputOne, SetList<T> inputTwo)
         {
             if (inputOne.counter == 0)
             {
@@ -76,20 +104,37 @@ namespace CustomListProject
                 inputTwo.counter++;
             }
             
-            T[] temporaryList = new T[inputOne.counter + inputTwo.counter];
-            int count = 0;
-            for(int i=0; i< inputOne.counter; i++)
+            T[] temporaryList;
+            for(int i=0; i<inputTwo.counter; i++)
             {
-                temporaryList[i] = inputOne.test[i];
-                count++;
+                for (int j = 0; j < inputOne.counter; j++)
+                {
+                    if ((j + 1) >= inputOne.test.Length)
+                    {
+                        break;
+                    }
+                    if (inputTwo.test[i].Equals(inputOne.test[j]))
+                    {
+                        temporaryList = new T[inputOne.test.Length - 1];
+                        for(int k=0; k<j; k++)
+                        {
+                            temporaryList[k] = inputOne.test[k];
+                        }
+                        int skipValue = (j + 1);
+                        for(int l = skipValue; l < inputOne.test.Length; l++)
+                        {
+                            temporaryList[l - 1] = inputOne.test[l];
+                        }
+                        inputOne.test = temporaryList;
+                    }
+                    else
+                        continue;
+                }
             }
-            for(int j = 0; j<inputTwo.counter; j++)
-            {
-                temporaryList[count] = inputTwo.test[j];
-                count++;
-            }
-            SetList<T> sumOfList = new SetList<T>(temporaryList);
-            return (sumOfList);
+
+            SetList<T> differenceOfList = new SetList<T>(inputOne.test);
+
+            return differenceOfList;
         }
     }
 }
