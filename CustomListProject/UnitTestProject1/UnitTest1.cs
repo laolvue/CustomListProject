@@ -16,11 +16,11 @@ namespace UnitTestProject1
             //Act
             setList.Add(input);
             //Assert
-            Assert.AreEqual(3, setList.test[0]);
+            Assert.AreEqual(3, setList.itemSeries[0]);
         }
-
         [TestMethod]
-        public void Add_OnetoLengthOfArray_ReturnsArrayLength()
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void Indexer_AddOneToArray_ReturnsException()
         {
             SetList<int> setList = new SetList<int>();
             //Arrange
@@ -28,11 +28,33 @@ namespace UnitTestProject1
             //Act
             setList.Add(input);
             //Assert
-            Assert.AreEqual(1, setList.test.Length);
+            Assert.AreEqual(3, setList.itemSeries[1]);
+        }
+        [TestMethod]
+        public void Add_OneToArray_ReturnsArrayLength()
+        {
+            SetList<int> setList = new SetList<int>();
+            //Arrange
+            int input = 3;
+            //Act
+            setList.Add(input);
+            //Assert
+            Assert.AreEqual(1, setList.counter);
+        }
+        [TestMethod]
+        public void Add_OneToArray_ReturnsCounter()
+        {
+            SetList<int> setList = new SetList<int>();
+            //Arrange
+            int input = 3;
+            //Act
+            setList.Add(input);
+            //Assert
+            Assert.AreEqual(1, setList.counter);
         }
 
         [TestMethod]
-        public void Add_TwotoLengthOfArray_ReturnsArrayLength()
+        public void Add_TwotoArray_ReturnsArrayLength()
         {
             SetList<int> setList = new SetList<int>();
             //Arrange
@@ -41,39 +63,55 @@ namespace UnitTestProject1
             setList.Add(input);
             setList.Add(inputTwo);
             //Assert
-            Assert.AreEqual(2, setList.test.Length);
+            Assert.AreEqual(2, setList.counter);
         }
 
         [TestMethod]
-        public void Subtract_fromArrayLengthOfZero_ReturnsArrayLengthIsZero()
+        public void Remove_ValueFromArray_ReturnsValueAtIndex()
         {
             SetList<int> setList = new SetList<int>();
             //Arrange
-
+            setList.Add(3);
+            setList.Add(1);
+            setList.Add(2);
+            setList.Add(3);
+            setList.Add(4);
             //Act
-            setList.Subtract();
-
+            setList.Remove(3);
             //Assert
-            Assert.AreEqual(0, setList.test.Length);
+            Assert.AreEqual(4, setList.itemSeries[2]);
         }
 
         [TestMethod]
-        public void AddSubtract_fromArray_ReturnsArrayLength()
+        public void Remove_ValuefromArray_ReturnsArrayLength()
         {
             SetList<int> setList = new SetList<int>();
             //Arrange
-            int input= 3;
+            setList.Add(3);
+            setList.Add(1);
+            setList.Add(2);
             //Act
-            for(int i = 0; i < 5; i++)
-            {
-                setList.Add(input);
-            }
-            setList.Subtract();
-
+            setList.Remove(3);
             //Assert
-            Assert.AreEqual(4, setList.test.Length);
+            Assert.AreEqual(2, setList.counter);
         }
-        
+
+        [TestMethod]
+        public void Remove_MultipleValuesfromArray_ReturnArrayLength()
+        {
+            SetList<int> setList = new SetList<int>();
+            //Arrange
+            setList.Add(3);
+            setList.Add(3);
+            setList.Add(2);
+            setList.Add(3);
+            setList.Add(4);
+            //Act
+            setList.Remove(3);
+            //Assert
+            Assert.AreEqual(2, setList.counter);
+        }
+
         [TestMethod]
         public void Add_FiveValuesToArray_ReturnsArrayLength()
         {
@@ -113,7 +151,7 @@ namespace UnitTestProject1
             SetList<string> sumOfList = listOne + listTwo;
 
             //Assert
-            Assert.AreEqual(2, sumOfList.test.Length);
+            Assert.AreEqual(2, sumOfList.itemSeries.Length);
         }
 
         [TestMethod]
@@ -127,7 +165,7 @@ namespace UnitTestProject1
             SetList<string> sumOfList = listOne + listTwo;
 
             //Assert
-            Assert.IsNull(sumOfList.test[0]);
+            Assert.IsNull(sumOfList.itemSeries[0]);
         }
 
         public void Add_TwoEmptyInstancesOfIntCustomList_ReturnsValueIsZero()
@@ -140,7 +178,7 @@ namespace UnitTestProject1
             SetList<string> sumOfList = listOne + listTwo;
 
             //Assert
-            Assert.AreEqual(0,sumOfList.test[0]);
+            Assert.AreEqual(0,sumOfList.itemSeries[0]);
         }
 
         [TestMethod]
@@ -156,7 +194,7 @@ namespace UnitTestProject1
             //Act
             SetList<string> sumOfList = listOne + listTwo;
             //Assert
-            Assert.AreEqual("cow", sumOfList.test[2]);
+            Assert.AreEqual("cow", sumOfList.itemSeries[2]);
         }
 
         [TestMethod]
@@ -173,7 +211,7 @@ namespace UnitTestProject1
             SetList<string> sumOfList = listOne + listTwo;
 
             //Assert
-            Assert.AreEqual(4, sumOfList.test.Length);
+            Assert.AreEqual(4, sumOfList.itemSeries.Length);
         }
 
         [TestMethod]
@@ -189,7 +227,7 @@ namespace UnitTestProject1
             //Act
             SetList<int> sumOfList = listOne - listTwo;
             //Assert
-            Assert.AreEqual(2, sumOfList.test.Length);
+            Assert.AreEqual(2, sumOfList.itemSeries.Length);
         }
 
         [TestMethod]
@@ -205,7 +243,7 @@ namespace UnitTestProject1
             //Act
             SetList<int> sumOfList = listOne - listTwo;
             //Assert
-            Assert.AreEqual(3, sumOfList.test[1]);
+            Assert.AreEqual(3, sumOfList.itemSeries[1]);
         }
 
         [TestMethod]
@@ -217,7 +255,7 @@ namespace UnitTestProject1
             //Act
             SetList<string> sumOfList = listOne - listTwo;
             //Assert
-            Assert.IsNull(sumOfList.test[0]);
+            Assert.IsNull(sumOfList.itemSeries[0]);
         }
 
         [TestMethod]
@@ -229,7 +267,7 @@ namespace UnitTestProject1
             //Act
             SetList<int> sumOfList = listOne - listTwo;
             //Assert
-            Assert.AreEqual(0,sumOfList.test[0]);
+            Assert.AreEqual(0,sumOfList.itemSeries[0]);
         }
 
     }

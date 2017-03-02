@@ -8,56 +8,68 @@ namespace CustomListProject
 {
     public class SetList<T>
     {
-        public T[] test;
+        public T[] itemSeries;
         public int counter = 0;
         public SetList()
         {
-            test = new T[1];
+            itemSeries = new T[1];
         }
-
-        public SetList(T[] test)
+        
+        public SetList(T[] itemSeries)
         {
-            this.test = test;
+            this.itemSeries = itemSeries;
         }
 
 
         public void Add(T value)
         {
             counter++;
-            T[] temporaryList = test;
-            test = new T[counter];
+            T[] temporaryList = itemSeries;
+            itemSeries = new T[counter];
             if (counter == 0)
             {
                 for (int i = (counter - 1); i >= 0; i--)
                 {
-                    test[i] = temporaryList[i];
+                    itemSeries[i] = temporaryList[i];
                 }
             }
             else
             {
                 for (int i = (counter - 1); i > 0; i--)
                 {
-                    test[i - 1] = temporaryList[i - 1];
+                    itemSeries[i - 1] = temporaryList[i - 1];
                 }
             }
-            test[counter - 1] = value;
+            itemSeries[counter - 1] = value;
         }
 
-        public void Subtract()
+        public void Remove( T input)
         {
-            if (counter > 0)
+            T[] temporaryList;
+            for (int i = 0; i < counter; i++)
             {
-                counter--;
-                T[] temporaryList = test;
-                test = new T[counter];
-
-                for (int i = 0; i < (counter); i++)
+                if (itemSeries[i].Equals(input))
                 {
-                    test[i] = temporaryList[i];
+                    int temporaryCounter = 0;
+                    temporaryList = new T[counter-1];
+                    for (int j = 0; j < i; j++)
+                    {
+                        temporaryCounter++;
+                        temporaryList[j] = itemSeries[j];
+                    }
+                    int skipValue = (i + 1);
+                    for (int k = skipValue; k < counter; k++)
+                    {
+                        temporaryCounter++;
+                        temporaryList[k - 1] = itemSeries[k];
+                    }
+                    itemSeries = temporaryList;
+                    counter = temporaryCounter;
+                    i--;
                 }
+                else
+                    continue;
             }
-            else
-                test = new T[counter];
         }
 
         public int Count()
@@ -80,12 +92,12 @@ namespace CustomListProject
             int count = 0;
             for (int i = 0; i < inputOne.counter; i++)
             {
-                temporaryList[i] = inputOne.test[i];
+                temporaryList[i] = inputOne.itemSeries[i];
                 count++;
             }
             for (int j = 0; j < inputTwo.counter; j++)
             {
-                temporaryList[count] = inputTwo.test[j];
+                temporaryList[count] = inputTwo.itemSeries[j];
                 count++;
             }
             SetList<T> sumOfList = new SetList<T>(temporaryList);
@@ -109,30 +121,30 @@ namespace CustomListProject
             {
                 for (int j = 0; j < inputOne.counter; j++)
                 {
-                    if ((j + 1) >= inputOne.test.Length)
+                    if ((j + 1) >= inputOne.itemSeries.Length)
                     {
                         break;
                     }
-                    if (inputTwo.test[i].Equals(inputOne.test[j]))
+                    if (inputTwo.itemSeries[i].Equals(inputOne.itemSeries[j]))
                     {
-                        temporaryList = new T[inputOne.test.Length - 1];
+                        temporaryList = new T[inputOne.itemSeries.Length - 1];
                         for(int k=0; k<j; k++)
                         {
-                            temporaryList[k] = inputOne.test[k];
+                            temporaryList[k] = inputOne.itemSeries[k];
                         }
                         int skipValue = (j + 1);
-                        for(int l = skipValue; l < inputOne.test.Length; l++)
+                        for(int l = skipValue; l < inputOne.itemSeries.Length; l++)
                         {
-                            temporaryList[l - 1] = inputOne.test[l];
+                            temporaryList[l - 1] = inputOne.itemSeries[l];
                         }
-                        inputOne.test = temporaryList;
+                        inputOne.itemSeries = temporaryList;
                     }
                     else
                         continue;
                 }
             }
 
-            SetList<T> differenceOfList = new SetList<T>(inputOne.test);
+            SetList<T> differenceOfList = new SetList<T>(inputOne.itemSeries);
 
             return differenceOfList;
         }
