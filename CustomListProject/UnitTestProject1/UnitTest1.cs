@@ -574,5 +574,61 @@ namespace UnitTestProject1
             //Assert
             Assert.AreEqual("3", listThree.itemSeries[2]);
         }
+
+        //Sort Tests:5 Total------------------------------------------------------------------------------------------------------------------------
+        [TestMethod]
+        public void Sort_IntInstanceOfCustom_ReturnsValueAtIndex()
+        {
+            SetList<int> listOne = new SetList<int>() { 4, 9, 8, 7, 0 };
+            //Arrange
+            //Act
+            string[] sortedList = listOne.Sort();
+            //Assert
+            Assert.AreEqual("4", sortedList[1]);
+        }
+
+        [TestMethod]
+        public void Sort_IntInstanceOfCustom_ReturnsLengthOfArray()
+        {
+            SetList<int> listOne = new SetList<int>() { 4, 9, 8, 7, 0 };
+            //Arrange
+            //Act
+            string[] sortedList = listOne.Sort();
+            //Assert
+            Assert.AreEqual(5, sortedList.Length);
+        }
+
+        [TestMethod]
+        public void Sort_StringofNumber_ReturnsValueAtIndex()
+        {
+            SetList<string> listOne = new SetList<string>() { "4","9", "8", "7", "0" };
+            //Arrange
+            //Act
+            string[] sortedList = listOne.Sort();
+            //Assert
+            Assert.AreEqual("8", sortedList[3]);
+        }
+
+        [TestMethod]
+        public void Sort_StringOfLetters_ReturnsValueAtIndex()
+        {
+            SetList<string> listOne = new SetList<string>() { "d", "b", "e", "a", "c" };
+            //Arrange
+            //Act
+            string[] sortedList = listOne.Sort();
+            //Assert
+            Assert.AreEqual("c", sortedList[2]);
+        }
+
+        [TestMethod]
+        public void Sort_PluralStringOfLetters_ReturnsValueAtIndex()
+        {
+            SetList<string> listOne = new SetList<string>() { "ab", "bd", "ba", "a", "ac" };
+            //Arrange
+            //Act
+            string[] sortedList = listOne.Sort();
+            //Assert
+            Assert.AreEqual("ac", sortedList[2]);
+        }
     }
 }

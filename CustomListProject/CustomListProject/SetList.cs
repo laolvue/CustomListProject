@@ -11,7 +11,6 @@ namespace CustomListProject
     {
         public T[] itemSeries;
         private int counter;
-        
         //Counter property
         public int Counter { get { return counter; } }
         public SetList()
@@ -150,9 +149,10 @@ namespace CustomListProject
         }
 
         //Override ToSTring
+
         public override string ToString()
         {
-            string itemResult="";
+            string itemResult = "";
             for (int i = 0; i < Counter; i++)
             {
                 if (i == 0)
@@ -164,5 +164,43 @@ namespace CustomListProject
             }
             return itemResult;
         }
+
+
+
+        //EXTRA CREDIT------------------------------------------------BELOW THIS LINE------------------------------------------------------------------------
+        //Sort method
+        public string[] Sort()
+        {
+            SetList<string> tempo = new SetList<string>();
+
+            tempo = ConvertToString();
+            for(int i=0; i < tempo.Counter; i++)
+            {
+                for(int j = 0; j< tempo.Counter; j++)
+                {
+                    if (tempo.itemSeries[i].CompareTo(tempo.itemSeries[j]) > 0 && j>i)
+                    {
+                        string bob = tempo.itemSeries[i];
+                        tempo.itemSeries[i] = tempo.itemSeries[j];
+                        tempo.itemSeries[j] = bob;
+                    }
+                    else
+                        continue;
+                }
+            }
+            return tempo.itemSeries; //returns a sorted array
+        }
+
+        //This method was implemented to go with the SORT method.
+        public SetList<string> ConvertToString()
+        {
+            SetList<string> temporaryList = new SetList<string>();
+            for (int i = 0; i < Counter; i++)
+            {
+                temporaryList.Add($"{itemSeries[i]}");
+            }
+            return temporaryList;
+        }
+
     }
 }
