@@ -75,22 +75,33 @@ namespace CustomListProject
 
         public SetList<T> Zip(SetList<T>inputTwo)
         {
-            int temporaryCounter = counter + inputTwo.counter;
-            SetList<T> resultList = new SetList<T>();
-            resultList.itemSeries= new T[temporaryCounter];
-            resultList.counter = temporaryCounter;
-
-            if (counter >= inputTwo.counter)
+            int temporaryCounter = 0;
+            if (Counter >= inputTwo.Counter)
             {
-                for (int i = 0; i < inputTwo.counter; i++)
+                temporaryCounter = Counter;
+            }
+            else if (Counter < inputTwo.Counter)
+            {
+                temporaryCounter = inputTwo.Counter;
+            }
+            SetList<T> resultList = new SetList<T>();
+            int bob = 0;
+            for(int i=0; i<temporaryCounter; i++)
+            {
+                if (i < Counter && i < inputTwo.Counter)
                 {
-                    resultList.itemSeries[i + 1] = inputTwo.itemSeries[i];
+                    resultList.Add(itemSeries[i]);
+                    resultList.Add(inputTwo.itemSeries[i]);
                 }
-                int count = 0;
-                for (int j = 0; j < counter; j++)
+                else
+                    bob++;
+                if(bob>0 && Counter > inputTwo.Counter)
                 {
-                    resultList.itemSeries[count] = itemSeries[j];
-                    count+=2;
+                    resultList.Add(itemSeries[i]);
+                }
+                else if (bob > 0 && Counter < inputTwo.Counter)
+                {
+                    resultList.Add(inputTwo.itemSeries[i]);
                 }
             }
             return resultList;
@@ -171,7 +182,6 @@ namespace CustomListProject
             }
 
             SetList<T> differenceOfList = new SetList<T>(inputOne.itemSeries);
-
             return differenceOfList;
         }
 

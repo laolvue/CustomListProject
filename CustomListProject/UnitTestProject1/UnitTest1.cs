@@ -434,7 +434,7 @@ namespace UnitTestProject1
 
         //ZIP Tests: 
         [TestMethod]
-        public void Zip_TwoCustomArrays_ReturnsValueOfNewArray()
+        public void Zip_TwoCustomArraysOfSameLength_ReturnsValueAtIndexOfNewArray()
         {
             SetList<int> listOne = new SetList<int>();
             SetList<int> listTwo = new SetList<int>();
@@ -487,11 +487,10 @@ namespace UnitTestProject1
             listTwo.Add(2);
             listTwo.Add(4);
             listTwo.Add(6);
-
             //Act
             listThree = listOne.Zip(listTwo);
             //Assert
-            Assert.AreEqual(4, listThree.itemSeries[5]);
+            Assert.AreEqual(6, listThree.itemSeries[5]);
         }
 
         [TestMethod]
@@ -509,6 +508,24 @@ namespace UnitTestProject1
             listThree = listOne.Zip(listTwo);
             //Assert
             Assert.AreEqual(3, listThree.itemSeries[1]);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void Zip_OneEmptyArrayWithMultiValuedArray_ReturnsOutOfRangeException()
+        {
+            SetList<int> listOne = new SetList<int>();
+            SetList<int> listTwo = new SetList<int>();
+            SetList<int> listThree = new SetList<int>();
+
+            //Arrange
+            listOne.Add(1);
+            listOne.Add(3);
+            listOne.Add(5);
+            //Act
+            listThree = listOne.Zip(listTwo);
+            //Assert
+            Assert.AreEqual(3, listThree.itemSeries[4]);
         }
 
         [TestMethod]
