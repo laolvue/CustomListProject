@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace CustomListProject
 {
-    public class SetList<T>
+    public class SetList<T>: IEnumerable
     {
         public T[] itemSeries;
-        public int counter = 0;
+        private int counter = 0;
+        public int Counter { get { return counter; } }
         public SetList()
         {
             itemSeries = new T[1];
@@ -19,7 +21,6 @@ namespace CustomListProject
         {
             this.itemSeries = itemSeries;
         }
-
 
         public void Add(T value)
         {
@@ -65,17 +66,37 @@ namespace CustomListProject
                     }
                     itemSeries = temporaryList;
                     counter = temporaryCounter;
-                    i--;
+                    break;
                 }
                 else
                     continue;
             }
         }
 
-        public int Count()
+        public SetList<T> Zip(SetList<T>inputTwo)
         {
-            return counter;
+            int temporaryCounter = counter + inputTwo.counter;
+            SetList<T> resultList = new SetList<T>();
+            resultList.itemSeries= new T[temporaryCounter];
+            resultList.counter = temporaryCounter;
+
+            if (counter >= inputTwo.counter)
+            {
+                for (int i = 0; i < inputTwo.counter; i++)
+                {
+                    resultList.itemSeries[i + 1] = inputTwo.itemSeries[i];
+                }
+                int count = 0;
+                for (int j = 0; j < counter; j++)
+                {
+                    resultList.itemSeries[count] = itemSeries[j];
+                    count+=2;
+                }
+            }
+            return resultList;
         }
+
+
 
         public static SetList<T> operator +(SetList<T> inputOne, SetList<T> inputTwo)
         {
@@ -127,17 +148,22 @@ namespace CustomListProject
                     }
                     if (inputTwo.itemSeries[i].Equals(inputOne.itemSeries[j]))
                     {
+                        int temporaryCounter = 0;
                         temporaryList = new T[inputOne.itemSeries.Length - 1];
                         for(int k=0; k<j; k++)
                         {
+                            temporaryCounter++;
                             temporaryList[k] = inputOne.itemSeries[k];
                         }
                         int skipValue = (j + 1);
                         for(int l = skipValue; l < inputOne.itemSeries.Length; l++)
                         {
+                            temporaryCounter++;
                             temporaryList[l - 1] = inputOne.itemSeries[l];
                         }
                         inputOne.itemSeries = temporaryList;
+                        inputOne.counter = temporaryCounter;
+                        j--;
                     }
                     else
                         continue;
@@ -147,6 +173,29 @@ namespace CustomListProject
             SetList<T> differenceOfList = new SetList<T>(inputOne.itemSeries);
 
             return differenceOfList;
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            for(int i = 0; i < counter; i++)
+            {
+                yield return $"{i+1}. {itemSeries[i]}";
+            }
+        }
+
+        public override string ToString()
+        {
+            string itemResult="";
+            for (int i = 0; i < counter; i++)
+            {
+                if (i == 0)
+                {
+                    itemResult += $"{itemSeries[i]}";
+                }
+                else
+                    itemResult += $" {itemSeries[i]}";
+            }
+            return itemResult;
         }
     }
 }

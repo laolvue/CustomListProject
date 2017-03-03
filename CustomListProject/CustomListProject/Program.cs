@@ -10,33 +10,21 @@ namespace CustomListProject
     {
         static void Main(string[] args)
         {
-            SetList<int> setList = new SetList<int>();
-            setList.Add(3);
-            setList.Add(3);
-            setList.Add(2);
-            setList.Add(3);
-            setList.Add(4);
-            //Act
-            setList.Remove(3);
-            /*
-            setList.Add("bob");
-            setList.Add("Lao");
-            setList.Add("car");
-            setList.Add("NDE");
-            setList.Add("Lao");
-            setList.Add("CODE");
-            setList.Add("WPEuo");
-            setList.Remove("Lao");
-            */
-            
-            /*
             SetList<int> listOne = new SetList<int>();
             SetList<int> listTwo = new SetList<int>();
-            //Arrange
+            SetList<int> listThree = new SetList<int>();
 
+            //Arrange
+            listOne.Add(1);
+            listOne.Add(3);
+            listOne.Add(5);
+            listTwo.Add(2);
+            listTwo.Add(4);
+            listTwo.Add(6);
             //Act
-            SetList<int> sumOfList = listOne - listTwo;
-            */
+            listThree = listOne.Zip(listTwo);
+            //Assert
+            //Assert
             Console.ReadLine();
         }
     }
