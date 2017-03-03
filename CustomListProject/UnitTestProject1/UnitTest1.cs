@@ -7,7 +7,7 @@ namespace UnitTestProject1
     [TestClass]
     public class UnitTest1
     {
-        //ADD TESTS: 5 total
+        //ADD TESTS: 5 total-------------------------------------------------------------------------------------------------------------------------
         [TestMethod]
         public void Add_toIndexZero_ReturnsThreeAtIndexZero()
         {
@@ -73,7 +73,7 @@ namespace UnitTestProject1
             Assert.AreEqual(0, value);
         }
 
-        //REMOVE TESTS: 3 total
+        //REMOVE TESTS: 3 total-----------------------------------------------------------------------------------------------------------
         [TestMethod]
         public void Remove_ValueFromArray_ReturnsValueAtIndex()
         {
@@ -101,6 +101,20 @@ namespace UnitTestProject1
         }
 
         [TestMethod]
+        public void Remove_StringValueFromStringArray_ReturnsArrayLength()
+        {
+            SetList<string> setList = new SetList<string>();
+            //Arrange
+            setList.Add("3");
+            setList.Add("1");
+            setList.Add("2");
+            //Act
+            setList.Remove("3");
+            //Assert
+            Assert.AreEqual(2, setList.Counter);
+        }
+
+        [TestMethod]
         public void Remove_MultipleValuesfromArray_ReturnArrayLength()
         {
             SetList<int> setList = new SetList<int>();
@@ -116,17 +130,16 @@ namespace UnitTestProject1
             //Assert
             Assert.AreEqual(3, setList.Counter);
         }
-        
-        //Overload "+" operator tests: 5 total
+
+        //Overload "+" operator tests: 5 total----------------------------------------------------------------------------------------------------
         [TestMethod]
-        public void Add_TwoEmptyInstancesOfCustomList_ReturnsNewListLength()
+        public void Add_TwoIntInstancesOfCustomList_ReturnsNewListLength()
         {
-            SetList<string> listOne = new SetList<string>() { "hi" };
-            SetList<string> listTwo = new SetList<string>() { "there" };
+            SetList<int> listOne = new SetList<int>() {1};
+            SetList<int> listTwo = new SetList<int>() {2};
             //Arrange
             //Act
-            SetList<string> sumOfList = listOne + listTwo;
-
+            SetList<int> sumOfList = listOne + listTwo;
             //Assert
             Assert.AreEqual(2, sumOfList.itemSeries.Length);
         }
@@ -137,22 +150,22 @@ namespace UnitTestProject1
             SetList<string> listOne = new SetList<string>();
             SetList<string> listTwo = new SetList<string>();
             //Arrange
-
             //Act
             SetList<string> sumOfList = listOne + listTwo;
-
             //Assert
             Assert.IsNull(sumOfList.itemSeries[0]);
         }
 
+        [TestMethod]
+
         public void Add_TwoEmptyInstancesOfIntCustomList_ReturnsValueIsZero()
         {
-            SetList<string> listOne = new SetList<string>();
-            SetList<string> listTwo = new SetList<string>();
+            SetList<int> listOne = new SetList<int>();
+            SetList<int> listTwo = new SetList<int>();
             //Arrange
 
             //Act
-            SetList<string> sumOfList = listOne + listTwo;
+            SetList<int> sumOfList = listOne + listTwo;
 
             //Assert
             Assert.AreEqual(0,sumOfList.itemSeries[0]);
@@ -175,7 +188,7 @@ namespace UnitTestProject1
         }
 
         [TestMethod]
-        public void Add_TwoInstancesOfCustomList_ReturnsNewListLength()
+        public void Add_TwoStringInstancesOfCustomList_ReturnsNewListLength()
         {
             SetList<string> listOne = new SetList<string>();
             SetList<string> listTwo = new SetList<string>();
@@ -191,7 +204,7 @@ namespace UnitTestProject1
             Assert.AreEqual(4, sumOfList.itemSeries.Length);
         }
 
-        //Overload "-" operator tests: 5 total
+        //Overload "-" operator tests: 6 total-----------------------------------------------------------------------------------------------------
         [TestMethod]
         public void subtract_TwoInstanceOfCustomList_ReturnsNewListLength()
         {
@@ -205,7 +218,7 @@ namespace UnitTestProject1
             //Act
             SetList<int> sumOfList = listOne - listTwo;
             //Assert
-            Assert.AreEqual(2, sumOfList.itemSeries.Length);
+            Assert.AreEqual(2, sumOfList.Counter);
         }
 
         [TestMethod]
@@ -223,9 +236,23 @@ namespace UnitTestProject1
             //Assert
             Assert.AreEqual(3, sumOfList.itemSeries[1]);
         }
+        [TestMethod]
+        public void subtract_EmptyListFromAnotherList_ReturnsLengthOfNewArray()
+        {
+            SetList<int> listOne = new SetList<int>();
+            SetList<int> listTwo = new SetList<int>();
+            //Arrange
+            listOne.Add(5);
+            listOne.Add(6);
+            listOne.Add(3);
+            //Act
+            SetList<int> sumOfList = listOne - listTwo;
+            //Assert
+            Assert.AreEqual(3, sumOfList.Counter);
+        }
 
         [TestMethod]
-        public void subtract_TwoInstancesOffCustomList_ReturnsValueAtIndex()
+        public void subtract_TwoValuesOffCustomList_ReturnsValueAtIndex()
         {
             SetList<int> listOne = new SetList<int>();
             SetList<int> listTwo = new SetList<int>();
@@ -268,7 +295,7 @@ namespace UnitTestProject1
             Assert.AreEqual(0,sumOfList.itemSeries[0]);
         }
 
-        //Iterate custom list: 6 total
+        //Iterate custom list: 6 total-----------------------------------------------------------------------------------------------------------
         [TestMethod]
         public void Iterate_CustomListWithOneValue_ReturnsValue()
         {
@@ -376,7 +403,7 @@ namespace UnitTestProject1
             Assert.IsNull(listOne.itemSeries[0]);
         }
 
-        //Override the ToString method: 4 total
+        //Override the ToString method: 4 total-------------------------------------------------------------------------------------------------
         [TestMethod]
         public void ToString_CustomListWithOneValue_ReturnsString()
         {
@@ -432,7 +459,7 @@ namespace UnitTestProject1
             Assert.IsNull(listOne.itemSeries[0]);
         }
 
-        //ZIP Tests: 
+        //ZIP Tests:6 Total------------------------------------------------------------------------------------------------------------------------
         [TestMethod]
         public void Zip_TwoCustomArraysOfSameLength_ReturnsValueAtIndexOfNewArray()
         {

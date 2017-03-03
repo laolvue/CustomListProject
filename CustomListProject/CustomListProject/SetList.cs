@@ -10,69 +10,56 @@ namespace CustomListProject
     public class SetList<T>: IEnumerable
     {
         public T[] itemSeries;
-        private int counter = 0;
+        private int counter;
+        
+        //Counter property
         public int Counter { get { return counter; } }
         public SetList()
         {
+            counter = 0;
             itemSeries = new T[1];
         }
-        
-        public SetList(T[] itemSeries)
-        {
-            this.itemSeries = itemSeries;
-        }
 
+        //Add method
         public void Add(T value)
         {
             counter++;
             T[] temporaryList = itemSeries;
-            itemSeries = new T[counter];
-            if (counter == 0)
+            itemSeries = new T[Counter];
+            for (int i = (Counter - 1); i > 0; i--)
             {
-                for (int i = (counter - 1); i >= 0; i--)
-                {
-                    itemSeries[i] = temporaryList[i];
-                }
+                itemSeries[i - 1] = temporaryList[i - 1];
             }
-            else
-            {
-                for (int i = (counter - 1); i > 0; i--)
-                {
-                    itemSeries[i - 1] = temporaryList[i - 1];
-                }
-            }
-            itemSeries[counter - 1] = value;
+            itemSeries[Counter - 1] = value;
         }
 
+        //Remove method
         public void Remove( T input)
         {
-            T[] temporaryList;
-            for (int i = 0; i < counter; i++)
+            SetList<T> temporaryList = new SetList<T>();
+            for (int i = 0; i < Counter; i++)
             {
                 if (itemSeries[i].Equals(input))
                 {
-                    int temporaryCounter = 0;
-                    temporaryList = new T[counter-1];
                     for (int j = 0; j < i; j++)
                     {
-                        temporaryCounter++;
-                        temporaryList[j] = itemSeries[j];
+                        temporaryList.Add(itemSeries[j]);
                     }
                     int skipValue = (i + 1);
-                    for (int k = skipValue; k < counter; k++)
+                    for (int k = skipValue; k < Counter; k++)
                     {
-                        temporaryCounter++;
-                        temporaryList[k - 1] = itemSeries[k];
+                        temporaryList.Add(itemSeries[k]);
                     }
-                    itemSeries = temporaryList;
-                    counter = temporaryCounter;
+                    itemSeries = temporaryList.itemSeries;
+                    counter = temporaryList.Counter;
                     break;
                 }
                 else
                     continue;
-            }
+            } 
         }
 
+        //Zip method
         public SetList<T> Zip(SetList<T>inputTwo)
         {
             int temporaryCounter = 0;
@@ -85,7 +72,7 @@ namespace CustomListProject
                 temporaryCounter = inputTwo.Counter;
             }
             SetList<T> resultList = new SetList<T>();
-            int bob = 0;
+            int OneArrayOnlyCounter= 0;
             for(int i=0; i<temporaryCounter; i++)
             {
                 if (i < Counter && i < inputTwo.Counter)
@@ -94,12 +81,12 @@ namespace CustomListProject
                     resultList.Add(inputTwo.itemSeries[i]);
                 }
                 else
-                    bob++;
-                if(bob>0 && Counter > inputTwo.Counter)
+                    OneArrayOnlyCounter++;
+                if(OneArrayOnlyCounter> 0 && Counter > inputTwo.Counter)
                 {
                     resultList.Add(itemSeries[i]);
                 }
-                else if (bob > 0 && Counter < inputTwo.Counter)
+                else if (OneArrayOnlyCounter > 0 && Counter < inputTwo.Counter)
                 {
                     resultList.Add(inputTwo.itemSeries[i]);
                 }
@@ -108,95 +95,65 @@ namespace CustomListProject
         }
 
 
-
+        //Overload "+" operator
         public static SetList<T> operator +(SetList<T> inputOne, SetList<T> inputTwo)
         {
-            if (inputOne.counter == 0)
+            SetList<T> temporaryList = new SetList<T>();
+            for (int i = 0; i < inputOne.Counter; i++)
             {
-                inputOne.counter++;
+                temporaryList.Add(inputOne.itemSeries[i]);
             }
-            if (inputTwo.counter == 0)
+            for (int j = 0; j < inputTwo.Counter; j++)
             {
-                inputTwo.counter++;
+                temporaryList.Add(inputTwo.itemSeries[j]);
             }
-
-            T[] temporaryList = new T[inputOne.counter + inputTwo.counter];
-            int count = 0;
-            for (int i = 0; i < inputOne.counter; i++)
-            {
-                temporaryList[i] = inputOne.itemSeries[i];
-                count++;
-            }
-            for (int j = 0; j < inputTwo.counter; j++)
-            {
-                temporaryList[count] = inputTwo.itemSeries[j];
-                count++;
-            }
-            SetList<T> sumOfList = new SetList<T>(temporaryList);
-            sumOfList.counter = inputOne.counter + inputTwo.counter;
-            return (sumOfList);
+            return (temporaryList);
         }
 
+
+        //Overload "-" operator
         public static SetList<T> operator -(SetList<T> inputOne, SetList<T> inputTwo)
         {
-            if (inputOne.counter == 0)
+            for(int i=0; i<inputTwo.Counter; i++)
             {
-                inputOne.counter++;
-            }
-            if (inputTwo.counter == 0)
-            {
-                inputTwo.counter++;
-            }
-            
-            T[] temporaryList;
-            for(int i=0; i<inputTwo.counter; i++)
-            {
-                for (int j = 0; j < inputOne.counter; j++)
+                for (int j = 0; j < inputOne.Counter; j++)
                 {
-                    if ((j + 1) >= inputOne.itemSeries.Length)
-                    {
-                        break;
-                    }
+                    SetList<T> temporaryList = new SetList<T>();
                     if (inputTwo.itemSeries[i].Equals(inputOne.itemSeries[j]))
                     {
-                        int temporaryCounter = 0;
-                        temporaryList = new T[inputOne.itemSeries.Length - 1];
                         for(int k=0; k<j; k++)
                         {
-                            temporaryCounter++;
-                            temporaryList[k] = inputOne.itemSeries[k];
+                            temporaryList.Add(inputOne.itemSeries[k]);
                         }
                         int skipValue = (j + 1);
-                        for(int l = skipValue; l < inputOne.itemSeries.Length; l++)
+                        for(int l = skipValue; l < inputOne.Counter; l++)
                         {
-                            temporaryCounter++;
-                            temporaryList[l - 1] = inputOne.itemSeries[l];
+                            temporaryList.Add(inputOne.itemSeries[l]);
                         }
-                        inputOne.itemSeries = temporaryList;
-                        inputOne.counter = temporaryCounter;
-                        j--;
+                        inputOne.itemSeries = temporaryList.itemSeries;
+                        inputOne.counter = temporaryList.Counter;
                     }
                     else
                         continue;
                 }
             }
-
-            SetList<T> differenceOfList = new SetList<T>(inputOne.itemSeries);
-            return differenceOfList;
+            return inputOne;
         }
 
+        //Iterate Array
         public IEnumerator GetEnumerator()
         {
-            for(int i = 0; i < counter; i++)
+            for(int i = 0; i < Counter; i++)
             {
                 yield return $"{i+1}. {itemSeries[i]}";
             }
         }
 
+        //Override ToSTring
         public override string ToString()
         {
             string itemResult="";
-            for (int i = 0; i < counter; i++)
+            for (int i = 0; i < Counter; i++)
             {
                 if (i == 0)
                 {

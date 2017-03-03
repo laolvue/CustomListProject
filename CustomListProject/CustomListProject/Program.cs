@@ -12,19 +12,22 @@ namespace CustomListProject
         {
             SetList<int> listOne = new SetList<int>();
             SetList<int> listTwo = new SetList<int>();
-            SetList<int> listThree = new SetList<int>();
-
             //Arrange
-            listOne.Add(1);
+            listOne.Add(5);
+            listOne.Add(6);
+            listOne.Add(3);
+            listOne.Add(4);
             listOne.Add(3);
             listOne.Add(5);
-            listTwo.Add(2);
-            listTwo.Add(4);
             listTwo.Add(6);
+            listTwo.Add(5);
             //Act
-            listThree = listOne.Zip(listTwo);
-            //Assert
-            //Assert
+            SetList<int> sumOfList = listOne - listTwo;
+            foreach(int bob in sumOfList.itemSeries)
+            {
+                Console.WriteLine(bob);
+
+            }
             Console.ReadLine();
         }
     }
