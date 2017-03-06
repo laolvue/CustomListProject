@@ -19,7 +19,7 @@ namespace CustomListProject
             itemSeries = new T[1];
         }
 
-        //Add method
+        //Add method: adds an input value to an array. Increase counter by 1.
         public void Add(T value)
         {
             counter++;
@@ -32,7 +32,7 @@ namespace CustomListProject
             itemSeries[Counter - 1] = value;
         }
 
-        //Remove method
+        //Remove method: Removes the first instance of a value in an array
         public void Remove( T input)
         {
             SetList<T> temporaryList = new SetList<T>();
@@ -58,7 +58,8 @@ namespace CustomListProject
             } 
         }
 
-        //Zip method
+        //Zip method: Zips values from 2 arrays. If one array run out of values before the other, the remaining values of the longer 
+        // array gets thrown at the end.
         public SetList<T> Zip(SetList<T>inputTwo)
         {
             int temporaryCounter = 0;
@@ -94,7 +95,7 @@ namespace CustomListProject
         }
 
 
-        //Overload "+" operator
+        //Overload "+" operator: concat two arrays together
         public static SetList<T> operator +(SetList<T> inputOne, SetList<T> inputTwo)
         {
             SetList<T> temporaryList = new SetList<T>();
@@ -110,7 +111,7 @@ namespace CustomListProject
         }
 
 
-        //Overload "-" operator
+        //Overload "-" operator: Remove all instances of inputTwo values from inputOne
         public static SetList<T> operator -(SetList<T> inputOne, SetList<T> inputTwo)
         {
             for(int i=0; i<inputTwo.Counter; i++)
@@ -139,7 +140,7 @@ namespace CustomListProject
             return inputOne;
         }
 
-        //Iterate Array
+        //Iterate Array: outputs a numbered value of each item in the array
         public IEnumerator GetEnumerator()
         {
             for(int i = 0; i < Counter; i++)
@@ -148,8 +149,7 @@ namespace CustomListProject
             }
         }
 
-        //Override ToSTring
-
+        //Override ToSTring: Outputs array values as one string with a space in between each value
         public override string ToString()
         {
             string itemResult = "";
@@ -171,24 +171,24 @@ namespace CustomListProject
         //Sort method
         public string[] Sort()
         {
-            SetList<string> tempo = new SetList<string>();
+            SetList<string> temporarySeries = new SetList<string>();
 
-            tempo = ConvertToString();
-            for(int i=0; i < tempo.Counter; i++)
+            temporarySeries = ConvertToString();
+            for(int i=0; i < temporarySeries.Counter; i++)
             {
-                for(int j = 0; j< tempo.Counter; j++)
+                for(int j = 0; j< temporarySeries.Counter; j++)
                 {
-                    if (tempo.itemSeries[i].CompareTo(tempo.itemSeries[j]) > 0 && j>i)
+                    if (temporarySeries.itemSeries[i].CompareTo(temporarySeries.itemSeries[j]) > 0 && j>i)
                     {
-                        string bob = tempo.itemSeries[i];
-                        tempo.itemSeries[i] = tempo.itemSeries[j];
-                        tempo.itemSeries[j] = bob;
+                        string bob = temporarySeries.itemSeries[i];
+                        temporarySeries.itemSeries[i] = temporarySeries.itemSeries[j];
+                        temporarySeries.itemSeries[j] = bob;
                     }
                     else
                         continue;
                 }
             }
-            return tempo.itemSeries; //returns a sorted array
+            return temporarySeries.itemSeries; //returns a sorted array
         }
 
         //This method was implemented to go with the SORT method.
